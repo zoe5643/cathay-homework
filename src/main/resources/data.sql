@@ -1,2 +1,2 @@
 INSERT INTO CURRENCY (CODE, CHINESE_NAME)
-VALUES ('USD', '美金'), ('GBP', '英鎊'), ('EUR', '歐元');
+VALUES ('USD', '美元'), ('GBP', '英鎊'), ('EUR', '歐元');

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,20 +30,21 @@ public class CoindeskService {
     // 呼叫 CoinDesk API，進行資料轉換後回傳
     public CoindeskResponseDto getTransformedData() {
         CoindeskRawDto rawData = getRawData();
+        return convert(rawData, currencyRepository.findAll());
+    }
 
-        // 轉換時間格式
+    public CoindeskResponseDto convert(CoindeskRawDto rawData, List<Currency> dbCurrencies) {
+        Map<String, String> nameMap = dbCurrencies.stream()
+                .collect(Collectors.toMap(Currency::getCode, Currency::getChineseName));
+
         String updatedAt = DateUtil.formatFromISO(rawData.getTime().getUpdatedISO());
 
-        // 轉換幣別資訊，並從 DB 查中文名稱
         List<TransformedCurrencyDto> currencies = rawData.getBpi().values().stream()
                 .map(bpi -> {
                     TransformedCurrencyDto dto = new TransformedCurrencyDto();
                     dto.setCode(bpi.getCode());
                     dto.setRate(bpi.getRateFloat());
-                    dto.setChineseName(
-                            currencyRepository.findById(bpi.getCode())
-                                    .map(Currency::getChineseName)
-                                    .orElse(""));
+                    dto.setChineseName(nameMap.getOrDefault(bpi.getCode(), ""));
                     return dto;
                 })
                 .collect(Collectors.toList());

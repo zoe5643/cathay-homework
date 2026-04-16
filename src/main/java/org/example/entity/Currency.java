@@ -15,11 +15,11 @@ public class Currency {
 
     @Id
     @Column(name = "CODE", length = 10)
-    private String code;           // PK，如 "USD"
+    private String code;           //
 
     @Column(name = "CHINESE_NAME", nullable = false, length = 50)
-    private String chineseName;         // 中文名稱，如 "美元"
+    private String chineseName;         //
 
     @Column(name = "UPDATED_AT")
-    private LocalDateTime updatedAt;  // 更新時間
+    private LocalDateTime updatedAt;  //
 }

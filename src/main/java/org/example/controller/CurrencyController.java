@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.dto.currency.CurrencyReqDto;
 import org.example.dto.currency.CurrencyResDto;
-import org.example.entity.Currency;
 import org.example.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +21,7 @@ public class CurrencyController {
 
     @GetMapping("/{code}")
     public ResponseEntity<CurrencyResDto> getCurrencyByCode(@PathVariable String code) {
-        CurrencyResDto currency = currencyService.getCurrencyByCode(code.toUpperCase());
-        return currency != null ? ResponseEntity.ok(currency) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(currencyService.getCurrencyByCode(code.toUpperCase()));
     }
 
     @PostMapping
@@ -33,8 +31,7 @@ public class CurrencyController {
 
     @PutMapping
     public ResponseEntity<CurrencyResDto> updateCurrency(@RequestBody CurrencyReqDto dto) {
-        CurrencyResDto currency = currencyService.updateCurrency(dto);
-        return currency != null ? ResponseEntity.ok(currency) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(currencyService.updateCurrency(dto)) ;
     }
 
     @DeleteMapping("/{code}")

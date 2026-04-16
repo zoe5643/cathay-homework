@@ -15,7 +15,7 @@ public class CoindeskRawDto {
     @Data
     public static class CoindeskTimeDto {
         private String updated;
-        private String updatedISO;// 原始格式如: 2024-03-15T12:00:00+00:00
+        private String updatedISO;
         private String updateduk;
     }
 
