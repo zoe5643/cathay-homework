@@ -7,8 +7,9 @@
 - Maven
 
 ## 啟動方式
-1. 在專案根目錄執行：mvn spring-boot:run
-2. H2 Console：
+1. 複製專案: git clone https://github.com/zoe5643/cathay-homework
+2. 在專案根目錄執行：mvn spring-boot:run
+3. H2 Console：
 - 路徑：http://localhost:8080/h2-console
 - User Name：sa / Password：(留空)
 
@@ -19,11 +20,14 @@
 - POST /api/currencies
 - PUT /api/currencies
 - DELETE /api/currencies/{code}
-POST / PUT Request Body：
+
+POST / PUT 的Request Body：
+```json
 {
   "code": "USD",
   "chineseName": "美元"
 }
+```
 
 ### Coindesk
 - GET /api/coindesk/raw
@@ -39,5 +43,7 @@ POST / PUT Request Body：
 - 分層架構（Controller / Service / Repository）
 - 使用 DTO 進行資料傳輸
 - 實作全域 Exception Handler，統一錯誤回應
-- Request Body使用Validation進行參數驗證
+- Request Body使用 Validation 進行參數驗證
+- 設定 RestTemplate timeout，避免 API 異常時影響系統回應時間
+- 設定 cache（5 分鐘），降低外部 API 呼叫頻率並提升效能
 
