@@ -8,6 +8,8 @@ import org.example.repository.CurrencyRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,11 +37,13 @@ public class CurrencyService {
 
     }
 
+    @Transactional
     public CurrencyResDto createCurrency(CurrencyReqDto dto) {
         Currency saved = currencyRepository.save(dto.toEntity());
         return CurrencyResDto.fromEntity(saved);
     }
 
+    @Transactional
     public CurrencyResDto updateCurrency(CurrencyReqDto dto) {
         Currency currency = currencyRepository.findById(dto.getCode()).orElseThrow(() -> new DataNotFoundException("/api/currencies(PUT)錯誤:查無幣別:"+dto.getCode()));
         currency.setChineseName(dto.getChineseName());
