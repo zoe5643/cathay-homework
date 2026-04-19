@@ -8,7 +8,6 @@ import org.example.repository.CurrencyRepository;
 import org.example.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -17,19 +16,14 @@ import java.util.stream.Collectors;
 @Service
 public class CoindeskService {
 
-    private static final String COINDESK_URL = "https://kengp3.github.io/blog/coindesk.json";
-
     @Autowired
     private CurrencyRepository currencyRepository;
-
-    public CoindeskRawDto getRawData() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(COINDESK_URL, CoindeskRawDto.class);
-    }
+    @Autowired
+    private CoindeskRawService coindeskRawService;
 
     // 呼叫 CoinDesk API，進行資料轉換後回傳
     public CoindeskResponseDto getTransformedData() {
-        CoindeskRawDto rawData = getRawData();
+        CoindeskRawDto rawData = coindeskRawService.getRawData();
         return convert(rawData, currencyRepository.findAll());
     }
 

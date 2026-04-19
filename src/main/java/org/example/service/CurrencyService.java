@@ -8,11 +8,8 @@ import org.example.repository.CurrencyRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +27,7 @@ public class CurrencyService {
 
     public CurrencyResDto getCurrencyByCode(String code) {
         Currency currency = currencyRepository.findById(code)
-                .orElseThrow(() -> new DataNotFoundException("查無幣別"));
+                .orElseThrow(() -> new DataNotFoundException("/api/currencies/{code}錯誤:查無幣別:"+code));
 
         CurrencyResDto dto = new CurrencyResDto();
         BeanUtils.copyProperties(currency, dto);
@@ -44,7 +41,7 @@ public class CurrencyService {
     }
 
     public CurrencyResDto updateCurrency(CurrencyReqDto dto) {
-        Currency currency = currencyRepository.findById(dto.getCode()).orElseThrow(() -> new DataNotFoundException("查無幣別"));
+        Currency currency = currencyRepository.findById(dto.getCode()).orElseThrow(() -> new DataNotFoundException("/api/currencies(PUT)錯誤:查無幣別:"+dto.getCode()));
         currency.setChineseName(dto.getChineseName());
         currency.setUpdatedAt(LocalDateTime.now());
         return CurrencyResDto.fromEntity(currencyRepository.save(currency));

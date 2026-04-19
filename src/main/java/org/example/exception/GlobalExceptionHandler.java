@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.RestClientException;
 
-import java.util.Map;
-import java.util.NoSuchElementException;
-
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
